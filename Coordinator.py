@@ -36,3 +36,24 @@ class Coordinator:
         self.rf = rf
         # placement[key] = ordered list of node ids that should hold the given key
         self.placement: dict[str, list[str]] = {} 
+    
+    # ----- helpers ------
+    """
+    Choose "count"  distinct live nodes for a key using hash-driven offset to spread keys across nodes. 
+    Need to include nodes to exclude (i.e) nodes already containing the key for self-healing purposes
+    """
+    def _pick_nodes(self, key: str, count : int, exclude: set[str] | None = None) -> list[Node]:
+        
+
+    # -----client operations------
+    """ store a vlaue in a node, ensure replication factor is met """
+    def put(self, key: str, value: str) -> None:
+        targets = self._pick_nodes(key, self.rf)
+        for node in targets:
+            node.write(key,value)
+        for node in targets:
+            self.placement[key].append(node)
+        
+    
+        
+    
