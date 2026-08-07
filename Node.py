@@ -39,3 +39,14 @@ class Node:
     """ simulate node failure, data does not clear, simply unreachable """
     def kill(self) -> None:
         self.alive = False
+    
+    """ brings failed node back to life with data intact """
+    def revive(self) -> None:
+        self.alive = True
+
+    def repair(self) -> str:
+        if self.alive:
+            status = "Up"
+        else:
+            status = "Down"
+        return f"Node {self.node_id} currently {status} with {len(self._data.keys())} keys"
